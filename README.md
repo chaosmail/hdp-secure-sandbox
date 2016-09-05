@@ -71,6 +71,7 @@ MySQL
 
 ## Resources
 
+* https://github.com/cstanca1/hdp2_4_2-vagrant
 * https://github.com/timveil/hdp-vagrant-base
 * https://docs.hortonworks.com/HDPDocuments/Ambari-2.4.0.1/bk_ambari-installation/content/log_in_to_apache_ambari.html
 * https://ambari.apache.org/1.2.5/installing-hadoop-using-ambari/content/ambari-kerb-1-2.html
