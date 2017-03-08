@@ -15,9 +15,7 @@ Centos 7 Vagrant Box with Ambari 2.4.0.1 and Kerberos
 5. Clone the Github repository:  `git clone https://github.com/chaosmail/hdp-secure-sandbox.git`
 6. Change directory to `hdp-secure-sandbox`
 7. Run `vagrant up`
-8. Navigate to `http://sandbox.hortonworks.com:8080/` and setup your cluster
-9. Run `vagrant ssh` and execute `kerberos_manual.sh` steps
-10. Setup Kerberos via Amabari
+8. Navigate to `http://sandbox.hortonworks.com:8080/` to get started
 
 ## Configure the Cluster
 

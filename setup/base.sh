@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 # installing required libraries

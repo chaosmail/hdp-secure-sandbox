@@ -1,0 +1,15 @@
+---
+centos_version: 7
+
+ambari_repo_url: http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.4.1.0/ambari.repo
+ambari_admin_user: admin
+ambari_admin_pwd: admin
+
+cluster_name: Sandbox
+
+# kdc_realm: "HWX.COM"
+# kdc_domain_realm: "hortonworks.com"
+# kdc_kdbmaster_key: "admin"
+# kdc_adminprinc_pass: "admin"
+# kdc_host: "sandbox.hortonworks.com"
+# kdc_admin_server: "sandbox.hortonworks.com"

@@ -1,5 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+require 'yaml'
+
+# Load configuration
+CONF = YAML.load_file("default.yaml")
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -12,7 +16,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "centos/7"
+  config.vm.box = "centos/%s" % [CONF['centos_version'] || 7]
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -29,7 +33,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  # config.vm.network "forwarded_port", guest: 8080, host: 8081
+  config.vm.network "forwarded_port", guest: 8080, host: 8081
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -55,7 +59,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
 
     # Display the VirtualBox GUI when booting the machine
-    vb.gui = true
+    # vb.gui = true
   
     # Customize the amount of memory on the VM:
     vb.memory = "8192"
@@ -71,10 +75,27 @@ Vagrant.configure(2) do |config|
   # information on available options.
 
   config.vm.provision "shell", path: "setup/base.sh"
-  config.vm.provision "shell", path: "setup/ambari.sh"
-  config.vm.provision "shell", path: "setup/ranger.sh"
-  config.vm.provision "shell", path: "setup/oozie.sh"
-  config.vm.provision "shell", path: "setup/kerberos.sh"
+  config.vm.provision "shell", path: "setup/common.sh"
+  config.vm.provision "shell", path: "setup/ambari-server.sh",
+    args: CONF['ambari_repo_url'] || "http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.4.0.1/ambari.repo"
+  config.vm.provision "shell", path: "setup/ambari-agent.sh",
+    args: CONF['ambari_repo_url'] || "http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.4.0.1/ambari.repo"
+
+  # Prepare environment for Ranger
+  # config.vm.provision "shell", path: "setup/ranger.sh"
+
+  # Prepare environment for Oozie
+  # config.vm.provision "shell", path: "setup/oozie.sh"
+  
+  # # Setup and configure Kerberos
+  # config.vm.provision "shell", path: "setup/kerberos.sh", args: [
+  #   '--realm', CONF['kdc_realm'] || "HWX.COM",
+  #   '--domain_realm', CONF['kdc_domain_realm'] || "hortonworks.com",
+  #   '--kdbmaster_key', CONF['kdc_kdbmaster_key'] || "admin",
+  #   '--adminprinc_pass', CONF['kdc_adminprinc_pass'] || "admin",
+  #   '--kdc_host', CONF['kdc_host'] || "sandbox.hortonworks.com",
+  #   '--admin_server', CONF['kdc_admin_server'] || "sandbox.hortonworks.com",
+  # ]
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
   # such as FTP and Heroku are also available. See the documentation at
